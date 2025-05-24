@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { HelmetProvider } from 'react-helmet-async';
 
 // Layout components
 import Layout from './components/layout/Layout';
@@ -39,38 +38,36 @@ const theme = createTheme({
 
 function App() {
   return (
-    <HelmetProvider>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Router>
-        <Routes>
-          {/* 多语言首页路由 */}
-          <Route path="/home-en" element={<HomePage_EN />} />
-          <Route path="/home-jp" element={<HomePage_JP />} />
-          <Route path="/home-kr" element={<HomePage_KR />} />
-          <Route path="/home-de" element={<HomePage_DE />} />
-          <Route path="/home-fr" element={<HomePage_FR />} />
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Router>
+      <Routes>
+        {/* 多语言首页路由 */}
+        <Route path="/home-en" element={<HomePage_EN />} />
+        <Route path="/home-jp" element={<HomePage_JP />} />
+        <Route path="/home-kr" element={<HomePage_KR />} />
+        <Route path="/home-de" element={<HomePage_DE />} />
+        <Route path="/home-fr" element={<HomePage_FR />} />
 
-          {/* 多语言展示页面 */}
-          <Route path="/languages" element={<MultiLanguagePage />} />
+        {/* 多语言展示页面 */}
+        <Route path="/languages" element={<MultiLanguagePage />} />
 
-          {/* 认证页面 - 独立布局 */}
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          
-          {/* 其他页面 - 需要Layout包装 */}
-          <Route path="/" element={<Layout />}>
-            <Route index element={<HomePage />} />
-            <Route path="features" element={<FeaturesPage />} />
-            <Route path="pricing" element={<PricingPage />} />
-            <Route path="dashboard" element={<DashboardPage />} />
-            <Route path="create-video" element={<CreateVideoPage />} />
-            <Route path="settings" element={<UserSettingsPage />} />
-          </Route>
-        </Routes>
-      </Router>
-    </ThemeProvider>
-    </HelmetProvider>
+        {/* 认证页面 - 独立布局 */}
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        
+        {/* 其他页面 - 需要Layout包装 */}
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomePage />} />
+          <Route path="features" element={<FeaturesPage />} />
+          <Route path="pricing" element={<PricingPage />} />
+          <Route path="dashboard" element={<DashboardPage />} />
+          <Route path="create-video" element={<CreateVideoPage />} />
+          <Route path="settings" element={<UserSettingsPage />} />
+        </Route>
+      </Routes>
+    </Router>
+  </ThemeProvider>
   );
 }
 

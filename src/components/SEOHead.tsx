@@ -1,5 +1,4 @@
-import React from 'react';
-import { Helmet } from 'react-helmet-async';
+import React, { useEffect } from 'react';
 
 interface SEOHeadProps {
   title: string;
@@ -24,45 +23,69 @@ const SEOHead: React.FC<SEOHeadProps> = ({
   ogImage,
   ogType = 'website'
 }) => {
-  const baseUrl = 'https://veo3.ai'; // 替换为实际域名
-  const fullCanonical = canonical.startsWith('http') ? canonical : `${baseUrl}${canonical}`;
-  const fullOgImage = ogImage?.startsWith('http') ? ogImage : `${baseUrl}${ogImage}`;
+  useEffect(() => {
+    const baseUrl = 'https://veo3.ai';
+    const fullCanonical = canonical.startsWith('http') ? canonical : `${baseUrl}${canonical}`;
+    const fullOgImage = ogImage?.startsWith('http') ? ogImage : `${baseUrl}${ogImage}`;
 
-  return (
-    <Helmet>
-      {/* 基础SEO标签 */}
-      <title>{title}</title>
-      <meta name="description" content={description} />
-      <meta name="language" content={language} />
-      {keywords && <meta name="keywords" content={keywords} />}
-      
-      {/* Canonical标签 */}
-      <link rel="canonical" href={fullCanonical} />
-      
-      {/* Open Graph标签 */}
-      <meta property="og:title" content={ogTitle || title} />
-      <meta property="og:description" content={ogDescription || description} />
-      <meta property="og:type" content={ogType} />
-      <meta property="og:url" content={fullCanonical} />
-      {fullOgImage && <meta property="og:image" content={fullOgImage} />}
-      <meta property="og:locale" content={language} />
-      
-      {/* Twitter Card标签 */}
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={ogTitle || title} />
-      <meta name="twitter:description" content={ogDescription || description} />
-      {fullOgImage && <meta name="twitter:image" content={fullOgImage} />}
-      
-      {/* 语言相关标签 */}
-      <html lang={language} />
-      
-      {/* 移动设备优化 */}
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      
-      {/* 机器人指令 */}
-      <meta name="robots" content="index, follow" />
-    </Helmet>
-  );
+    // 设置标题
+    document.title = title;
+
+    // 设置或更新meta标签的函数
+    const setMetaTag = (name: string, content: string, property?: boolean) => {
+      const attribute = property ? 'property' : 'name';
+      let meta = document.querySelector(`meta[${attribute}="${name}"]`);
+      if (!meta) {
+        meta = document.createElement('meta');
+        meta.setAttribute(attribute, name);
+        document.head.appendChild(meta);
+      }
+      meta.setAttribute('content', content);
+    };
+
+    // 设置或更新link标签的函数
+    const setLinkTag = (rel: string, href: string) => {
+      let link = document.querySelector(`link[rel="${rel}"]`);
+      if (!link) {
+        link = document.createElement('link');
+        link.setAttribute('rel', rel);
+        document.head.appendChild(link);
+      }
+      link.setAttribute('href', href);
+    };
+
+    // 设置基础SEO标签
+    setMetaTag('description', description);
+    setMetaTag('language', language);
+    if (keywords) setMetaTag('keywords', keywords);
+
+    // 设置Canonical标签
+    setLinkTag('canonical', fullCanonical);
+
+    // 设置Open Graph标签
+    setMetaTag('og:title', ogTitle || title, true);
+    setMetaTag('og:description', ogDescription || description, true);
+    setMetaTag('og:type', ogType, true);
+    setMetaTag('og:url', fullCanonical, true);
+    if (fullOgImage) setMetaTag('og:image', fullOgImage, true);
+    setMetaTag('og:locale', language, true);
+
+    // 设置Twitter Card标签
+    setMetaTag('twitter:card', 'summary_large_image');
+    setMetaTag('twitter:title', ogTitle || title);
+    setMetaTag('twitter:description', ogDescription || description);
+    if (fullOgImage) setMetaTag('twitter:image', fullOgImage);
+
+    // 设置html lang属性
+    document.documentElement.lang = language;
+
+    // 设置viewport和robots标签
+    setMetaTag('viewport', 'width=device-width, initial-scale=1.0');
+    setMetaTag('robots', 'index, follow');
+
+  }, [title, description, canonical, language, keywords, ogTitle, ogDescription, ogImage, ogType]);
+
+  return null; // 这个组件不渲染任何内容
 };
 
 export default SEOHead; 
