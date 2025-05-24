@@ -1,15 +1,15 @@
-# VEO3 网站 SEO Canonical 标签设置
+# VEO3 网站 SEO Canonical 标签设置文档
 
 ## 📋 概述
 
-已为 VEO3 网站的所有页面设置了 Canonical 标签，确保 SEO 优化和避免重复内容问题。每个页面的 Canonical URL 与访问 URL 完全一致。
+本文档说明了VEO3网站如何实现SEO优化，特别是canonical标签的设置。我们使用原生React和DOM API来管理SEO元数据，确保与React 19的完全兼容性。
 
 ## 🔧 技术实现
 
 ### 1. SEO 组件
 - **文件**: `src/components/SEOHead.tsx`
 - **功能**: 统一管理所有页面的 SEO 元数据
-- **库**: `react-helmet-async`
+- **库**: 原生React (useEffect + DOM API)
 
 ### 2. 应用配置
 - **文件**: `src/App.tsx`
@@ -19,22 +19,22 @@
 
 ### 主要页面
 
-| 页面 | 访问 URL | Canonical URL | 语言 |
-|------|----------|---------------|------|
-| 首页 | `/` | `https://veo3.ai/` | zh-CN |
+| 页面 | 路径 | Canonical URL | 语言 |
+|------|------|---------------|------|
+| 中文首页 | `/` | `https://veo3.ai/` | zh-CN |
 | 功能页面 | `/features` | `https://veo3.ai/features` | zh-CN |
 | 定价页面 | `/pricing` | `https://veo3.ai/pricing` | zh-CN |
 | 多语言展示 | `/languages` | `https://veo3.ai/languages` | zh-CN |
 
 ### 多语言页面
 
-| 语言版本 | 访问 URL | Canonical URL | 语言代码 |
-|----------|----------|---------------|----------|
-| 英文版 | `/home-en` | `https://veo3.ai/home-en` | en-US |
-| 日文版 | `/home-jp` | `https://veo3.ai/home-jp` | ja-JP |
-| 韩文版 | `/home-kr` | `https://veo3.ai/home-kr` | ko-KR |
-| 德文版 | `/home-de` | `https://veo3.ai/home-de` | de-DE |
-| 法文版 | `/home-fr` | `https://veo3.ai/home-fr` | fr-FR |
+| 页面 | 路径 | Canonical URL | 语言 |
+|------|------|---------------|------|
+| 英文首页 | `/home-en` | `https://veo3.ai/home-en` | en-US |
+| 日文首页 | `/home-jp` | `https://veo3.ai/home-jp` | ja-JP |
+| 韩文首页 | `/home-kr` | `https://veo3.ai/home-kr` | ko-KR |
+| 德文首页 | `/home-de` | `https://veo3.ai/home-de` | de-DE |
+| 法文首页 | `/home-fr` | `https://veo3.ai/home-fr` | fr-FR |
 
 ## 🌍 SEO 元数据特色
 

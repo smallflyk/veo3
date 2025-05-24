@@ -31,6 +31,14 @@ const SEOHead: React.FC<SEOHeadProps> = ({
     // 设置标题
     document.title = title;
 
+    // Google Analytics 页面浏览跟踪
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('config', 'G-XT1320Q2E4', {
+        page_title: title,
+        page_location: fullCanonical
+      });
+    }
+
     // 设置或更新meta标签的函数
     const setMetaTag = (name: string, content: string, property?: boolean) => {
       const attribute = property ? 'property' : 'name';
